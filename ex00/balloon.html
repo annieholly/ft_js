@@ -10,10 +10,72 @@
             border-radius: 50%;
         }
     </style>
-    <script src="main.js"></script>
 </head>
 <body>
-    <div id="balloon"> 
+    <div id="balloon" onclick="grow()" onmouseleave="shrink()">
     </div>
 </body>
+  <script>
+  var bg_color = "red";
+  var elem = document.getElementById("balloon");
+  var height = elem.offsetHeight;
+  var width = elem.offsetWidth;
+  
+  function grow(){
+      console.log(bg_color);
+      console.log(height);
+      console.log(width);
+      if (bg_color == "red")
+      {
+        elem.style.backgroundColor = "green";
+        bg_color = "green";
+      }
+      else if (bg_color == "green")
+      {
+        elem.style.backgroundColor = "blue";
+        bg_color="blue";
+      }
+      else if (bg_color == "blue")
+      {
+        elem.style.backgroundColor = "red";
+        bg_color="red";
+      }
+      if (height == 420 || width == 420)
+      {
+        height = 200;
+        width = 200;
+      }
+      else {
+        height = height + 10;
+        width = width + 10;
+      }
+      elem.style.height = height+'px';
+      elem.style.width = width+'px';
+  }
+
+  function shrink(){
+    if (bg_color == "red")
+    {
+      elem.style.backgroundColor = "blue";
+      bg_color = "blue";
+    }
+    else if (bg_color == "blue")
+    {
+      elem.style.backgroundColor = "green";
+      bg_color="green";
+    }
+    else if (bg_color == "green")
+    {
+      elem.style.backgroundColor = "red";
+      bg_color="red";
+    }
+    if (height > 200 || width > 420)
+    {
+      height = height - 5;
+      width = width - 5;
+    }
+    elem.style.height = height+'px';
+    elem.style.width = width+'px';
+  }
+  </script>
 </html>

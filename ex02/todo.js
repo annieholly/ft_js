@@ -14,14 +14,16 @@ function save_task(task){
 }
 
 function newTask() {
-    taskcount++;
     console.log("taskcount:"+taskcount);
     var task = prompt("Enter task:");
-    var id_name = 'task'+taskcount;
+    if (task == "")
+      return ;
     tasks_obj[id_name] = task;
+    var id_name = 'task'+taskcount;
     add_to_dom(task, id_name);
     setCookie(cookie_taskcount, taskcount, 30);
-} 
+    taskcount++;
+}
 
 function add_to_dom(task, id_name){
     var d = document.createElement("DIV");
@@ -36,10 +38,18 @@ function add_to_dom(task, id_name){
 
 function removeTask(id_name){
     var current_elem = document.getElementById(id_name);
-    current_elem.parentNode.removeChild(current_elem);
-    delete tasks_obj[id_name];
-    tasks_json = JSON.stringify(tasks_obj);
-    setCookie(cookie_tasks, tasks_json, 30);
+    var delete_prompt = prompt("Are you sure you want to remove this task?");
+    delete_prompt = delete_prompt.toLowerCase();
+    console.log(delete_prompt);
+    if (delete_prompt != "yes" && delete_prompt != "y"
+        && delete_prompt != "ok" && delete_prompt != "okay")
+      return ;
+    else {
+      current_elem.parentNode.removeChild(current_elem);
+      delete tasks_obj[id_name];
+      tasks_json = JSON.stringify(tasks_obj);
+      setCookie(cookie_tasks, tasks_json, 30);
+    }
 }
 
 function setCookie(cname, cvalue, exdays) {
@@ -66,9 +76,10 @@ function getCookie(cname) {
 }
 
 function checkCookie(){
+
     tasks_json = getCookie(cookie_tasks);
-    if (tasks_json == '""')
-        console.log("task_cookie empty");
+    if (tasks_json == "")
+        console.log("no cookies here");
     else
         load_existing_tasks(tasks_json);
 }

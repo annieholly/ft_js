@@ -3,18 +3,60 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
-        <input type="text" name="left">
-        <select>
+    <form id="calc">
+        <input type="text" name="left" id="left_id">
+        <select id="op">
             <option value="add">+</option>
             <option value="sub">-</option>
             <option value="mult">x</option>
             <option value="divide">/</option>
             <option value="modulo">%</option>
         </select>
-        <input type="text" name="right">
-        <input type="submit" value="Try me!">
+        <input type="text" name="right" id="right_id">
+        <input type="button" value="Try me!" onclick="calc()">
     </form>
-    
 </body>
+<script>
+  function calc(){
+    var left_num = parseInt(document.getElementById("left_id").value);
+    var right_num = parseInt(document.getElementById("right_id").value);
+    var selected_op = document.getElementById("op").value;
+    if (left_num < 0 || right_num < 0)
+      alert('Error :(');
+    else
+      do_op(left_num, selected_op, right_num);
+  }
+
+  function do_op(left_num, selected_op, right_num){
+    var result;
+    var alert_message;
+    var right_num_zero = false;
+    if (selected_op == "add")
+      result = left_num + right_num;
+    else if (selected_op == "sub")
+      result = left_num - right_num;
+    else if (selected_op == "mult")
+      result = left_num * right_num;
+    else if (selected_op == "divide")
+    {
+      if (right_num == 0)
+        right_num_zero = true;
+      result = left_num / right_num;
+    }
+    else if (selected_op == "modulo")
+    {
+      if (right_num == 0)
+        right_num_zero = true;
+      result = left_num % right_num;
+    }
+
+    alert_message = result;
+    if (right_num_zero == true)
+      alert_message = "It's over 9000!"
+    alert(alert_message);
+    console.log(result);
+  }
+  setInterval( function () { alert( "Please, use me..." ); }, 30000 );
+
+</script>
 </html>
